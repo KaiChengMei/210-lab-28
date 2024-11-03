@@ -18,6 +18,7 @@ void sort(list<Goat> trip);
 void find(list<Goat> trip, const string &name); 
 void totalage(const list<Goat> &trip);
 void nextyear(list<Goat> &trip);
+void reverse(list<Goat> &trip);
 
 
 int main_menu();
@@ -167,3 +168,11 @@ void nextyear(list<Goat> &trip) {
     for_each(trip.begin(), trip.end(), [](Goat &g) { g.set_age(g.get_age() + 1); });
     cout << "Each goat's age increased by 1.\n";
 }
+
+//8
+void reverse(list<Goat> &trip) {
+    trip.reverse();
+    cout << "Goat reversed." << endl;
+}
+
+//9
