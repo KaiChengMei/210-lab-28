@@ -44,7 +44,7 @@ int main() {
     
     // Goat Manager 3001 Engine
     int sel = main_menu();
-    while (sel != 4) {
+    while (sel != 12) {
         switch (sel) {
             case 1:
                 cout << "Adding a goat.\n";
@@ -74,7 +74,14 @@ int main_menu() {
     cout << "[1] Add a goat\n";
     cout << "[2] Delete a goat\n";
     cout << "[3] List goats\n";
-    cout << "[4] Quit\n";
+
+
+
+
+
+
+    
+    cout << "[12] Quit\n";
     cout << "Choice --> ";
     int choice;
     cin >> choice;
