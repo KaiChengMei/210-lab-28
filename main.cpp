@@ -19,7 +19,7 @@ void find(list<Goat> trip, const string &name);
 void totalage(const list<Goat> &trip);
 void nextyear(list<Goat> &trip);
 void reverse(list<Goat> &trip);
-void deletename(list<Goat> &trip, const string &color);
+void deletecolor(list<Goat> &trip, const string &color);
 void older60(list<Goat> &trip, const string &age);
 void copy_trip(const list<Goat>& trip);
 
@@ -70,6 +70,43 @@ int main() {
                 cout << "Displaying goat data.\n";
                 display_trip(trip);
                 break;
+            case 4:
+                cout << "Sorted goats by age:\n";
+                sort(trip);
+                display_trip(trip);
+                break;
+            case 5:
+                cout << "Find a goat by name:\n";
+                {
+                    string n;
+                    cout << "Enter name: ";
+                    cin >> n;
+                    find(trip, n);
+                }
+                break;
+            case 6:
+                totalage(trip);
+                break;
+            case 7:
+                nextyear(trip);
+                break;
+            case 8:
+                reverse(trip);
+                break;
+            case 9:
+                {
+                    string c;
+                    cout << "Enter color you want to delete: ";
+                    cin >> c;
+                    deletecolor(trip, c);
+                }
+                break;
+            case 10:
+                older60(trip, "age");
+                break;
+            case 11:
+                copy_trip(trip);
+                break;
             default:
                 cout << "Invalid selection.\n";
                 break;
@@ -88,11 +125,12 @@ int main_menu() {
     cout << "[3] List goats\n";
     cout << "[4] Sorted goats\n";
     cout << "[5] Find goats\n";
-
-
-
-
-
+    cout << "[6] Total age\n";
+    cout << "[7] Next year(everyone age+1)\n";
+    cout << "[8] Reverse list\n";
+    cout << "[9] Delete color\n";
+    cout << "[10] Any older than 60\n";
+    cout << "[11] Copy trip\n";
     cout << "[12] Quit\n";
     cout << "Choice --> ";
     int choice;
@@ -178,7 +216,7 @@ void reverse(list<Goat> &trip) {
 }
 
 //9 
-void deletename(list<Goat> &trip, const string &color) {
+void deletecolor(list<Goat> &trip, const string &color) {
     trip.remove_if([color] (const Goat &g) {return g.get_color() == color;});
     cout << "Goat with color: " << color << " were removed." << endl;
 }
