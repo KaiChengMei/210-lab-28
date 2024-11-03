@@ -11,6 +11,12 @@ int select_goat(list<Goat> trip);
 void delete_goat(list<Goat> &trip);
 void add_goat(list<Goat> &trip, string [], string []);
 void display_trip(list<Goat> trip);
+
+void sort(list<Goat> trip);
+void find(list<Goat> trip, const string &name); 
+
+
+
 int main_menu();
 
 int main() {
@@ -74,13 +80,13 @@ int main_menu() {
     cout << "[1] Add a goat\n";
     cout << "[2] Delete a goat\n";
     cout << "[3] List goats\n";
+    cout << "[4] Sorted goats\n";
+    cout << "[5] Find goats\n";
 
 
 
 
 
-
-    
     cout << "[12] Quit\n";
     cout << "Choice --> ";
     int choice;
@@ -92,14 +98,18 @@ int main_menu() {
     return choice;
 }
 
-void delete_goat(list<Goat> &trip) {
-    cout << "DELETE A GOAT\n";
-    int index = select_goat(trip);
-    auto it = trip.begin();
-    advance(it, index-1);
-    trip.erase(it);
-    cout << "Goat deleted. New trip size: " << trip.size() << endl;
+
+void display_trip(list<Goat> trip) {
+    int i = 1;
+    for (auto gt: trp)
+        cout << "\t" 
+             << "[" << i++ << "] "
+             << gt.get_name() 
+             << " (" << gt.get_age() 
+             << ", " << gt.get_color() << ")\n";
 }
+
+
 
 void add_goat(list<Goat> &trip, string nms[], string cls[]) {
     cout << "ADD A GOAT\n";
@@ -111,25 +121,35 @@ void add_goat(list<Goat> &trip, string nms[], string cls[]) {
     cout << "Goat added. New trip size: " << trip.size() << endl;
 }
 
-void display_trip(list<Goat> trp) {
-    int i = 1;
-    for (auto gt: trp)
-        cout << "\t" 
-             << "[" << i++ << "] "
-             << gt.get_name() 
-             << " (" << gt.get_age() 
-             << ", " << gt.get_color() << ")\n";
+void delete_goat(list<Goat> &trip) {
+    cout << "DELETE A GOAT\n";
+    int index = select_goat(trip);
+    auto it = trip.begin();
+    advance(it, index-1);
+    trip.erase(it);
+    cout << "Goat deleted. New trip size: " << trip.size() << endl;
 }
 
-int select_goat(list<Goat> trp) {
+int select_goat(list<Goat> trip) {
     int input;
     cout << "Make a selection:\n";
-    display_trip(trp);
+    display_trip(trip);
     cout << "Choice --> ";
     cin >> input;
-    while (input < 1 or input > trp.size()) {
+    while (input < 1 or input > trip.size() {
         cout << "Invalid choice, again --> ";
         cin >> input;
     }
     return input;
 }
+
+void sort(list<Goat> trip) {
+    trip.sort([](const Goat $a, const Goat &b) {return a.get_age() < b.get_age;});
+    cout << "Goat sorted" << endl;
+}
+
+void find(list<Goat> trip, const string &name) {
+    auto it = find_(trip.begin(),trip.end(), [name](const Goat&g)) {return g.get_name() == name;}
+    cout << "Found: " << it->get_name() << << " (" << it->get_age() << ", " << it->get_color() << ")\n";
+}
+
