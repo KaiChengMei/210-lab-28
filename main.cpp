@@ -2,6 +2,8 @@
 #include <fstream>
 #include <iomanip>
 #include <list>
+#include <algorithm>
+#include <numeric>
 #include "Goat.h"
 using namespace std;
 
@@ -14,14 +16,15 @@ void display_trip(list<Goat> trip);
 
 void sort(list<Goat> trip);
 void find(list<Goat> trip, const string &name); 
-
+void totalage(const list<Goat> &trip);
+void nextyear(list<Goat> &trip);
 
 
 int main_menu();
 
 int main() {
     srand(time(0));
-    bool again;
+
 
     // read & populate arrays for names and colors
     ifstream fin("names.txt");
@@ -47,7 +50,7 @@ int main() {
         Goat tmp(name, age, color);
         trip.push_back(tmp);
     }
-    
+
     // Goat Manager 3001 Engine
     int sel = main_menu();
     while (sel != 12) {
@@ -70,7 +73,7 @@ int main() {
         }
         sel = main_menu();
     }
-    
+
 
     return 0;
 }
@@ -101,7 +104,7 @@ int main_menu() {
 
 void display_trip(list<Goat> trip) {
     int i = 1;
-    for (auto gt: trp)
+    for (auto gt: trip)
         cout << "\t" 
              << "[" << i++ << "] "
              << gt.get_name() 
@@ -136,20 +139,31 @@ int select_goat(list<Goat> trip) {
     display_trip(trip);
     cout << "Choice --> ";
     cin >> input;
-    while (input < 1 or input > trip.size() {
+    while (input < 1 or input > trip.size()) {
         cout << "Invalid choice, again --> ";
         cin >> input;
     }
     return input;
 }
-
+// 4
 void sort(list<Goat> trip) {
-    trip.sort([](const Goat $a, const Goat &b) {return a.get_age() < b.get_age;});
+    trip.sort([](const Goat &a, const Goat &b) {return a.get_age() < b.get_age();});
     cout << "Goat sorted" << endl;
 }
-
+// 5
 void find(list<Goat> trip, const string &name) {
-    auto it = find_(trip.begin(),trip.end(), [name](const Goat&g)) {return g.get_name() == name;}
-    cout << "Found: " << it->get_name() << << " (" << it->get_age() << ", " << it->get_color() << ")\n";
+    auto it = find_if(trip.begin(),trip.end(), [name](const Goat&g) {return g.get_name() == name;});
+    cout << "Found: " << it->get_name() << " (" << it->get_age() << ", " << it->get_color() << ")\n";
 }
 
+//6
+void totalage(const list<Goat> &trip) {
+    int total = accumulate(trip.begin(), trip.end(),0,[](int sum, const Goat &g) {return sum + g.get_age(); });
+    cout << "Total age is: " << total << endl;
+}
+
+//7
+void nextyear(list<Goat> &trip) {
+    for_each(trip.begin(), trip.end(), [](Goat &g) { g.set_age(g.get_age() + 1); });
+    cout << "Each goat's age increased by 1.\n";
+}
