@@ -14,13 +14,13 @@ void delete_goat(list<Goat> &trip);
 void add_goat(list<Goat> &trip, string [], string []);
 void display_trip(list<Goat> trip);
 
-void sort(list<Goat> trip);
-void find(list<Goat> trip, const string &name); 
+void sortg(list<Goat> &trip);
+void find(list<Goat> &trip, const string &name); 
 void totalage(const list<Goat> &trip);
 void nextyear(list<Goat> &trip);
 void reverse(list<Goat> &trip);
 void deletecolor(list<Goat> &trip, const string &color);
-void older60(list<Goat> &trip, const string &age);
+void older15(list<Goat> &trip);
 void copy_trip(const list<Goat>& trip);
 
 int main_menu();
@@ -56,6 +56,7 @@ int main() {
 
     // Goat Manager 3001 Engine
     int sel = main_menu();
+    cout << endl;
     while (sel != 12) {
         switch (sel) {
             case 1:
@@ -72,11 +73,11 @@ int main() {
                 break;
             case 4:
                 cout << "Sorted goats by age:\n";
-                sort(trip);
+                sortg(trip);
                 display_trip(trip);
                 break;
             case 5:
-                cout << "Find a goat by name:\n";
+                cout << "Find a goat by name:" << endl;
                 {
                     string n;
                     cout << "Enter name: ";
@@ -102,7 +103,7 @@ int main() {
                 }
                 break;
             case 10:
-                older60(trip, "age");
+                older15(trip);
                 break;
             case 11:
                 copy_trip(trip);
@@ -119,6 +120,7 @@ int main() {
 }
 
 int main_menu() {
+    cout << endl;
     cout << "*** GOAT MANAGER 3001 ***\n";
     cout << "[1] Add a goat\n";
     cout << "[2] Delete a goat\n";
@@ -129,13 +131,13 @@ int main_menu() {
     cout << "[7] Next year(everyone age+1)\n";
     cout << "[8] Reverse list\n";
     cout << "[9] Delete color\n";
-    cout << "[10] Any older than 60\n";
+    cout << "[10] Any older than 15\n";
     cout << "[11] Copy trip\n";
     cout << "[12] Quit\n";
     cout << "Choice --> ";
     int choice;
     cin >> choice;
-    while (choice < 1 || choice > 4) {
+    while (choice < 1 || choice > 12) {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
@@ -187,14 +189,19 @@ int select_goat(list<Goat> trip) {
     return input;
 }
 // 4
-void sort(list<Goat> trip) {
+void sortg(list<Goat> &trip) {
     trip.sort([](const Goat &a, const Goat &b) {return a.get_age() < b.get_age();});
     cout << "Goat sorted" << endl;
 }
 // 5
-void find(list<Goat> trip, const string &name) {
+void find(list<Goat> &trip, const string &name) {
     auto it = find_if(trip.begin(),trip.end(), [name](const Goat&g) {return g.get_name() == name;});
-    cout << "Found: " << it->get_name() << " (" << it->get_age() << ", " << it->get_color() << ")\n";
+    if (it != trip.end()) {
+        cout << "Found: " << it->get_name() << " (" << it->get_age() << ", " << it->get_color() << ")" << endl;
+    } 
+    else {
+        cout << "Goat not found." << endl;
+    }
 }
 
 //6
@@ -222,9 +229,9 @@ void deletecolor(list<Goat> &trip, const string &color) {
 }
 
 //10
-void older60(list<Goat> &trip, const string &age) {
-    bool elder = any_of(age.begin(), age.end(), [] (int age) {return age > 60;});
-    cout << "Is ther any older than 60? :";
+void older15(list<Goat> &trip) {
+    bool elder = any_of(trip.begin(), trip.end(), [] (const Goat &g) {return g.get_age() > 15;});
+    cout << "Is ther any older than 15? :";
     if (elder) {
         cout << "Yes" << endl;
     }
