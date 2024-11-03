@@ -19,7 +19,9 @@ void find(list<Goat> trip, const string &name);
 void totalage(const list<Goat> &trip);
 void nextyear(list<Goat> &trip);
 void reverse(list<Goat> &trip);
-
+void deletename(list<Goat> &trip, const string &color);
+void older60(list<Goat> &trip, const string &age);
+void copy_trip(const list<Goat>& trip);
 
 int main_menu();
 
@@ -166,7 +168,7 @@ void totalage(const list<Goat> &trip) {
 //7
 void nextyear(list<Goat> &trip) {
     for_each(trip.begin(), trip.end(), [](Goat &g) { g.set_age(g.get_age() + 1); });
-    cout << "Each goat's age increased by 1.\n";
+    cout << "Each goat's age increased by 1." << endl;
 }
 
 //8
@@ -175,4 +177,28 @@ void reverse(list<Goat> &trip) {
     cout << "Goat reversed." << endl;
 }
 
-//9
+//9 
+void deletename(list<Goat> &trip, const string &color) {
+    trip.remove_if([color] (const Goat &g) {return g.get_color() == color;});
+    cout << "Goat with color: " << color << " were removed." << endl;
+}
+
+//10
+void older60(list<Goat> &trip, const string &age) {
+    bool elder = any_of(age.begin(), age.end(), [] (int age) {return age > 60;});
+    cout << "Is ther any older than 60? :";
+    if (elder) {
+        cout << "Yes" << endl;
+    }
+    else {
+        cout << "No" << endl;
+    }
+}
+
+//11
+void copy_trip(const list<Goat>& trip) {
+    list<Goat> tripCopy;
+    copy(trip.begin(), trip.end(), back_inserter(tripCopy) );
+    cout << "Trip copied. " << endl << "Copy size: " << tripCopy.size() << endl;
+    display_trip(tripCopy);
+}
